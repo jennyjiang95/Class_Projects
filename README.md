@@ -1,6 +1,6 @@
 #This is a showcase of my class projects.
 
-### 1. Life Expectancy VS Income 1880-2015
+### 1. [Life Expectancy VS Income 1880-2015](https://shangjunjiang.shinyapps.io/gdplife/)
 Intrigued by [Hans Rosling's project](https://www.youtube.com/watch?v=jbkSRLYSojo), I recreated a similar graph using R.
 
 ###### Language: R (Shiny app; ggplot2)
@@ -11,7 +11,7 @@ between the Berkeley Police Department and different groups of people, especiall
 populations and neighborhoods within Berkeley.
 ###### Language: R (ggplot2, map); Google Map API
 
-### 3. Different word choices across US States
+### 3. [Different word choices across US States](https://shangjunjiang.shinyapps.io/wordchoice/)
 Interested in languages, I used the dataset from [a Dialect Survey conducted by Bert Vaux](http://www4.uwm.edu/FLL/linguistics/dialect/index.html) to create this map. 
 ###### Language: R (ggplot2, Shiny app, map)
 
