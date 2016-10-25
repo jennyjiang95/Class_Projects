@@ -1,0 +1,146 @@
+---
+title: "Untitled"
+author: "Shangjun Jiang"
+date: "August 3, 2016"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(networkD3)
+library(jsonlite)
+library(magrittr)
+library(readr)
+library(purrr)
+library(dplyr)
+#setwd("~/Dekstop/Stats R/githubrepos-jennyjiang95/labs9")
+
+#setwd("~/Desktop/Stats R/githubrepos-jennyjiang95/labs9")
+```
+
+To create a simple force-directed network diagram with the `networkD3` package, you need a data frame containing the edges of your network stored as a data frame.  The first column of the data frame should be `source` and the second, `target`, denoting the nodes where the edges start and end, respectively.
+```{r}
+# Create fake data
+src    <- c("A", "A", "A", "A",
+            "B", "B", "C", "C", "D")
+target <- c("B", "C", "D", "J",
+            "E", "F", "G", "H", "I")
+networkData <- data.frame(src, target)
+```
+
+Once you have the data frame, the process is rather straightforward.  You simply supply the data frame to `simpleNetwork`.
+```{r}
+# Plot
+simpleNetwork(networkData)
+```
+
+Customizing properties of the network is as easy as supplying additional arguments.
+```{r}
+simpleNetwork(
+  networkData, 
+  width = 400,
+  height = 250,
+  textColour = "orange",
+  linkColour = "blue",
+  nodeColour = "pink", 
+  opacity = 0.9
+)
+```
+
+To get even more control over the the network (such as specifying how close the nodes should be to one-another), you would use `forceNetwork`.  This takes on two data frames: `links` and `nodes`.
+
+* `links` should be a 2-3 column data frame containing information on the edges of the network:
+    + `source` and `target` denote the same information as above; however, the information should be encoded as indices starting from 0
+    + an optional `value` column specifies how wide the edges should be (this will be scaled relatively by the graphing algorithm)
+* `nodes` is a 1-4 column data frame containing vertex information
+    + `name` should contain the names of the nodes
+    + `nodeid` numbers that reference the indices in `links`.  If this isn't specified, then the algorithm will assume the order that appears in `links$source`
+    + `group` groupings for the nodes
+    + `nodesize` how large each node should be
+
+```{r}
+miserables <- fromJSON("miserable.json")
+miserables %$%
+  forceNetwork(
+    Links = links, 
+    Nodes = nodes, 
+    Source = "source",
+    Target = "target", 
+    Value = "value", 
+    NodeID = "name", 
+    Group = "group", 
+    opacity = 0.4
+  )
+```
+
+`sankeyNetwork` works the same way, except that it plots a [Sankey Flow Diagram](https://en.wikipedia.org/wiki/Sankey_diagram) instead.
+
+```{r}
+fromJSON("energy.json") %$%
+  sankeyNetwork(
+    Links = links,
+    Nodes = nodes,
+    Source = "source",
+    Target = "target",
+    Value = "value",
+    NodeID = "name",
+    units = "TWh",
+    fontSize = 12,
+    nodeWidth = 30
+  )
+```
+
+A `radialNetwork` models a tree, which is a network that has a root node and no cycles.  The `List` argument is a list of lists (of lists...) with elements named `name` and `children`.  It's much easier to think of the data in JSON format.
+```{r}
+flare <- fromJSON("flare.json", simplifyDataFrame = FALSE) 
+radialNetwork(List = flare, fontSize = 10, opacity = 0.9)
+```
+
+The above plot has too much information in a small space.  We should subset for readability.
+```{r}
+flareSubset <- flare
+flareSubset$children <- flareSubset$children[1:3]
+radialNetwork(List = flareSubset, fontSize = 10, opacity = 0.9)
+```
+
+An alternate way of displaying the tree would be with a diagonal network.  I'm not sure why it's called diagonal when it's clearly displayed in a horizontal fashion.
+```{r}
+diagonalNetwork(List = flareSubset, fontSize = 10, opacity = 0.9)
+```
+
+## Exercises
+As usual, the hardest part about working with data is getting it into the right form.
+
+### Read Highland Tribes (easy)
+Hage & Harary (1983) use the Gahuku-Gama system of the Eastern Central Highlands of New Guinea, described by Read (1954), to illustrate a clusterable signed graph. Read's ethnography portrayed an alliance structure among three tribal groups containing balance as a special case; among Gahuku-Gama the enemy of an enemy can be either a friend or an enemy.
+
+The signed graph has been split into two matrices: GAMAPOS for alliance ("rova") relations, GAMANEG for antagonistic ("hina") relations. To reconstruct the signed graph, multiply GAMANEG by -1, and add the two matrices.
+
+The data are stored in `read_headlands.dat`, and can be read in with `read_delim` (skipping lines to avoid the header!).
+
+
+```{r}
+headlands <- read_delim("read_headlands.dat",
+                delim = "")
+
+
+```
+
+
+### Siphonophorae (hard)
+The [siphonophorae](https://en.wikipedia.org/wiki/Siphonophorae) phylogeny is shown as a force-directed network below.  Massage the data so that it can be displayed as a radial network.
+```{r}
+siphon <- fromJSON("siphonophorae.json")
+siphon %$%
+    forceNetwork(
+    Links = links, 
+    Nodes = nodes, 
+    Source = "source",
+    Target = "target", 
+    Value = "value", 
+    NodeID = "name", 
+    Group = "group", 
+    opacity = 0.4
+  )
+```

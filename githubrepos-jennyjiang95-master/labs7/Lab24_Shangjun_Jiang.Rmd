@@ -1,0 +1,245 @@
+---
+title: "Lab 24"
+author: "Shangjun Jiang"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Monty Hall Generalization
+
+In the classic Monty Hall problem, there are three doors. Behind one of those doors is a car, and behind each of the other two doors is a goat. The contestant picks a door and Monty opens one of the remaining doors, one he knows doesn't hide the car. After Monty has shown a goat behind the door that he opens, the contestant is given the option to switch doors.
+
+Write a function called "simMH" that generalizes the Monty Hall problem. Your function should take the following arguments:
+
+`n`: the total number of doors;
+
+`k`: the number of doors Monty opens;
+
+`switch`: a logical value stating whether or not contestant decides to switch doors
+
+Your function should return:
+
+`win`: a logical value stating whether or not the contestant has selected the door that hides the car
+
+Recall: For a vector `x` of length 1, `sample()` considers `x` to be the vector `1:x`. It might be helpful to define a new function that will always return `x` if `length(x) == 1` but works like the regular `sample()` function for `x` of length greater than 1.
+
+
+```{r}
+#n: the total number of doors
+#k: the number of doors Monty opens
+
+resample <- function(x, ...){
+  if (length(x) == 1){
+    x
+  }else{
+    sample(x,...)
+  }
+}
+
+library(stringr)
+result <- c()
+simMH<-function(n = 10, k=10, switch=T) {
+ doors<-1:n #initialize the doors behind one of which is a good prize
+ win <- 0 #to keep track of number of wins
+ lose <- 0 #keep track of number of loses
+ prize <- sample (doors, 1)  #randomize which door has the good prize
+ guess <- sample (doors, 1)  #guess a door at random
+
+## Reveal one of the doors you didn't pick which has a bum prize
+ #resample(xx, k)
+ if (prize!=guess) {
+   reveal<-doors[-c(prize,guess)]
+ } else {
+   reveal<-sample(doors[-c(prize,guess)],1)
+ }
+ 
+ ## Stay with your initial guess or switch
+ if(switch == T){
+   select<-doors[-c(reveal,guess)]
+ }else if(switch== F){
+   select<-guess
+ }
+
+## Count up your wins
+ if(select==prize){
+   win <- win + 1
+   result <- str_c(result, 1, sep = " ")
+ }else{
+   lose <- lose + 1
+   result <- str_c(result, 0, sep = " ")
+ }
+ print(result)
+}
+
+simMH(4,1,T)
+simMH(100,20,T)
+
+
+```
+
+
+
+
+Check:
+```{r, eval = F}
+set.seed(12345)
+x <- replicate(10000, simMH(3, 1, switch = TRUE))
+print(x)
+sum(as.integer(x))/length(x)
+
+sum(x)/length(x) #0.6681, exact answer: 2/3
+
+x <- replicate(10000, simMH(100, 98, switch = TRUE))
+print(x)
+sum(as.integer(x))/length(x)
+sum(x)/length(x) #0.9905, exact answer: 0.99
+
+x <- replicate(10000, simMH(4, 1, switch = TRUE))
+sum(as.integer(x))/length(x)
+sum(x)/length(x) #0.3844, exact answer: 3/8
+```
+
+
+
+## Monte Carlo Estimation of $\pi$ 
+
+Consider a circle embedded inside of the unit square. Let X and Y be independent random variables representing the x and y coordinates of a point, and suppose X and Y are uniformly distributed between [-1, 1]. 
+
+Note: The probability $(X,Y)$ lies inside the circle is equal to $$\frac{\pi r^2}{4r^2}$$ Therefore, to find $\pi$, we need only take $4*P(X^2 + Y^2 \le r^2)$. In this case, $r = 1$
+
+Write a function called "estimatePi" that takes in the the following arguments:
+
+`num.points`: an integer value stating the number of points to select from the unit square
+
+The function should return the following:
+
+`pi_hat`: estimation of $\pi$
+```{r}
+monte <- function(n) 
+{
+	count <- 0 
+	#initilize variable named count that count 
+	#how many random number gives in the range of  1 > 0.5 
+	for (i in 1:n)
+	{# Repeat n times 
+		if(runif(1)>0.5) {
+		  # if the rundom number given by the function funif() in the range of  1 > 0.5 then increment count by one
+			count <- count +1 
+		}
+	}
+	#devide counter by total number of random number we pick
+	return (count/n)
+
+}
+monte(100000)
+
+
+```
+
+
+```{r}
+# reset variablesre
+rm(list=ls())
+
+#
+#
+# x and y can take values from [ -radius , +radius ]
+#
+is_inside <- function(x, y, radius ) {
+    
+  # check
+  if ( x > radius || x > radius ) {
+    NULL
+  } else {
+    inside = (sqrt(x**2 + y**2) <= radius)
+    data.frame(x,y,inside)
+  }
+}
+#
+#
+# determines pi value
+#
+determine_pi <- function(radius,sample_size=1000000,start_seed=TRUE,seed=1321123131) {
+  
+  # get data points
+  points = get_square_points(radius*2,sample_size,start_seed,seed)
+  
+  # check which points are inside circle
+  frame = is_inside( points$x, points$y, radius )
+  
+  # get frequency
+  freq = as.data.frame(table(frame$inside))
+  
+  # initialize variables
+  key <- c()
+  value <- c()
+  
+  # true occurences
+  true = freq[freq$Var1==TRUE,][,2]
+  # false occurences
+  false = freq[freq$Var1==FALSE,][,2]
+  if (is.na(true)) {true=0}
+  if (is.na(false)) {false=0}
+  # percentage of trues
+  perct = true/ (true + false)
+  
+  # how many are true
+  key <- c( key, "true" )
+  value <- c( value, true)
+  
+  # how many are false
+  key <- c( key, "false" )
+  value <- c( value, false)
+  
+  # percentage of true
+  key <- c( key, "percentage" )
+  value <- c( value, perct )
+  
+  # value of pi
+  key <- c( key, "pi" )
+  if (true + false == 0) {
+    value <- c( value, NA )
+  } else {
+    value <- c( value, (radius*2)**2/(radius**2)* perct)
+  }
+  
+  # return result
+  data.frame(key,value)
+}
+
+#
+#
+# get a data frame with x and y columns that fit inside a  
+#
+get_square_points <- function( side, sample_size=1000,start_seed=TRUE,seed=1321123131 ) {
+
+  radius = side / 2
+  # set seed to better control the deviation
+  if ( sample_size > 1 && start_seed ) {
+    set.seed(seed)
+  }
+  
+  # initialize variables
+  x <- rnorm(sample_size,0,side*2) %% side - radius
+  y <- rnorm(sample_size,0,side*2) %% side - radius
+  
+  # create values' matrix
+  data.frame(x, y)
+}
+
+```
+
+```{r}
+is_inside(-2, 3, 1)
+```
+
+
+
+Check:
+```{r, eval = F}
+set.seed(456123)
+estimatePi(100000) #3.1408
+```
+

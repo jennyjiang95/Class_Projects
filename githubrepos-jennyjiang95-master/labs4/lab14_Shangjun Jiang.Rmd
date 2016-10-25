@@ -1,0 +1,178 @@
+---
+title: "wk5"
+author: "Shangjun Jiang"
+date: "29 June 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r}
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(lubridate)
+library(ggplot2)
+library(ggrepel)
+
+```
+
+
+## Read in the data
+```{r}
+setwd("~/Desktop/Stats R/stat133-su2016/14-lesson/")
+corrupt <- read.csv("EconomistData.csv")
+str(corrupt)
+
+```
+
+
+## Make a basic plot
+```{r}
+ggplot(corrupt,aes(x=CPI,y=HDI))+geom_point(aes(color=Region))
+
+```
+
+## second layer+aesthetics
+```{r}
+ggplot(corrupt,aes(x=CPI,y=HDI))+geom_smooth(method="lm",formula=y~log(x),se=FALSE,color="red")+geom_point(aes(color=Region),shape=1,size=2,stroke=1.5)
+
+```
+
+## adding the text
+```{r}
+points_to_label <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
+                     "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
+                     "India", "Italy", "China", "South Africa", "Spane",
+                     "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
+                     "United States", "Germany", "Britain", "Barbados", "Norway", 
+                     "Japan", "New Zealand", "Singapore")
+
+length(points_to_label)
+cc<- filter(corrupt, Country%in%points_to_label)
+cc
+length(cc)
+
+str(corrupt$Country)
+
+?geom_text
+
+ggplot(corrupt,aes(x=CPI,y=HDI))+
+  geom_smooth(method="lm",formula=y~log(x),se=FALSE,color="red")+
+    geom_point(aes(color=Region),shape=1,size=2,stroke=1.5)+ 
+      geom_text_repel(data=cc,aes(label =Country), colour="gray20")
+```
+
+## modifying the legend
+The legend names are off. Use mutate and factor to change the label of the levels of Region. Reason your way through the equialencies if you’re not familiar.
+```{r}
+mc<- mutate(corrupt, Region=
+         str_replace(corrupt$Region, "EU W. Europe", "OECD") %>% 
+        str_replace("Asia Pacific", "Asia&Oceania") %>% 
+       str_replace("East EU Cemt Asia", "Central&Eastern Europe") %>% 
+       str_replace("MENA", "Middle East & north Africa") %>% 
+       str_replace("SSA", "Sub-Saharan Africa"))
+
+
+ggplot(mc,aes(x=CPI,y=HDI))+
+  geom_smooth(method="lm",formula=y~log(x),se=FALSE,color="red")+
+    geom_point(aes(color=Region),shape=1,size=2,stroke=1.5)+ 
+      geom_text_repel(data=cc,aes(label =Country), colour="gray20")
+
+```
+
+OECD  <- EU W. Europe
+Americas  <- Americas
+Asia&Oceania <- Asia Pacific
+Central&Eastern Europe <- East EU Cemt Asia
+Middle East & north Africa  <- MENA
+Sub-Saharan Africa  <-SSA
+
+## Adding the titles
+```{r}
+
+ggplot(mc,aes(x=CPI,y=HDI))+
+  geom_smooth(method="lm",formula=y~log(x),se=FALSE,color="red")+
+    geom_point(aes(color=Region),shape=1,size=2,stroke=1.5)+ 
+      geom_text_repel(data=cc,aes(label =Country), colour="gray20")+
+  labs(title="Corruption and Human development", x="Corruption Perceptions Index, 2011 (10=least corrupt)", y = "Human Development Index, 2011 (1=Best)", fill = "Region")
+
+
+```
+
+## modifying the scales
+```{r, fig.width = 9, fig.asp = .5}
+
+ggplot(mc,aes(x=CPI,y=HDI))+
+  geom_smooth(method="lm",formula=y~log(x),se=FALSE,color="red")+
+  geom_point(aes(color=Region),shape=1,size=2,stroke=1.5)+ 
+  geom_text_repel(data=cc,aes(label =Country), colour="gray20")+
+  labs(title="Corruption and Human development", x="Corruption Perceptions Index, 2011 (10=least corrupt)", y = "Human Development Index, 2011 (1=Best)", fill = "Region")+
+  scale_x_continuous(limits=c(1,10),breaks=c(1,2,3,4,5,6,7,8,9,10))+
+  scale_y_continuous(limits=c(0.2,1.0), breaks = c(0.2,0.4,0.6,0.8,1.0))+
+  scale_color_manual(values=c("#099DD7", "#248E84", "#28AADC", "#24576D", "#96503F", "#F2583F" ))+
+  theme_minimal()
+
+
+
+
+
+```
+
+
+
+```{r, eval = F}
+text = element_text(color = "gray20"),
+legend.justification = 0.1, # anchor point for legend.position.
+legend.text = element_text(size = 11, color = "gray10"),
+axis.text = element_text(face = "italic"),
+axis.title.x = element_text(vjust = -1), # move title away from axis
+axis.title.y = element_text(vjust = 2), # move away for axis
+axis.line = element_line(color = "gray40", size = 0.5),
+panel.grid.major = element_line(color = "gray50", size = 0.5),
+panel.grid.major.x = element_blank()
+```
+
+
+```{r,eval = F}
+footnote <- "Sources: Transparency International; UN Human Development Report"
+footgrob <- textGrob(footnote, x = 0, hjust = -0.1, vjust=0.1, gp = gpar(fontface = "italic", fontsize = 12))
+g <- arrangeGrob(p, bottom = footgrob)
+grid.draw(g)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

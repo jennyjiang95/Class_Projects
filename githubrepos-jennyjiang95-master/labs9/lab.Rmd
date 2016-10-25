@@ -1,0 +1,25 @@
+---
+title: "lab30"
+author: "Andrew Do"
+date: "August 1, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## SQL Lab
+
+This lab will not be graded.  It is meant to give you some practice with using SQL.  You'll need to open a connection to the `chinook` database.
+
+1.  Which tracks are more expensive than $0.99?
+2.  Which tracks have the word 'love' in the title?
+3.  Which tracks begin with the word 'love'?
+4.  Which tracks were composed by Jimi Hendrix
+5.  Which albums are by Queen?
+6.  Who is the album Zooropa by?
+7.  Which tracks are by Amy Winehouse?
+8.  Which tracks are on the playlist Brazillian Music and who are they by?
+9.  How many songs are on each playlist? Keep the playlist names and order by number of songs.
+10.  How expensive are each of Amy Winehouse's albums?

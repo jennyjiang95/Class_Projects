@@ -1,0 +1,139 @@
+<<<<<<< HEAD
+---
+title: "lab3"
+author: "Shangjun Jiang"
+date: "June 8, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Importing the Data
+Run install the package `readr` by running `install.packages("readr")` in the console.
+
+The code below reads in the `tents.csv` comma-separated file.  The `col_types` argument is telling `R` what the data type is in each column.  See `?read_csv` if you're curious.
+```{r}
+library(readr)
+tents <- read_csv("tents.csv", col_types = "ccnniccc")
+```
+
+### Questions
+Answer the following questions programatically.  Some questions ask for you to explain what you see---you may answer this as text outside a code block.
+
+1. Run `str()` on `tents`.  What information does it tell you? This is a useful function to know.
+```{r}
+str (tents)
+```
+I think the str function displays the interal structure of an R object.
+
+2. What class is `tents`?
+```{r}
+class(tents)
+```
+The function class prints the vector of names of classes an object inherits from. 
+
+3. How many rows are in `tents`?
+```{r}
+nrow (tents)
+```
+
+4. How many columns are in `tents`?
+```{r}
+ncol (tents)
+```
+
+5. What are the names of the columns?
+```{r}
+colnames (tents)
+```
+
+6. Display the first 5 rows.
+```{r}
+tents [1:5,]
+```
+
+7. Display the last 4 rows.
+```{r}
+tents [87:90,]
+```
+
+8. Find out how to use `quantile` to find the interquartile range (75th percentile - 50th percentile) of the weights of the tents.
+IQR = 0.75 - 0.25???
+```{r}
+quantile (tents $"weight", 0.75) - quantile (tents $"weight", 0.5)
+```
+
+9. Find the standard deviation of the heights of the `tents`.  Does `R` use `n` or `n-1` in the denominator when calculating standard deviation?
+```{r}
+sd (tents $"height")
+```
+R use 'n-1' in the denominator when calculating the standard deviation to make the result a little bit bigger. 
+The standard deviation calculated with a divisor of n-1 is a standard deviation. 
+Because the observed values fall, on average, closer to the sample mean than to the population mean, the standard deviation which is calculated using deviations from the sample mean underestimates the desired standard deviation of the population. Using n-1 instead of n as the divisor corrects for that by making the result a little bit bigger.
+
+10. The weight is given in grams.  Add a new column to the data frame called `weight_lbs` that contains the weight of the tents in pounds.  Remember to overwrite `tents` with your update.
+```{r}
+tents ["weight-lbs"] <- c (tents $weight)/ 453.592
+tents
+```
+
+11. The height is given in centimeters.  Add a new variable `height_in` to the data frame that contains the height of the tents in inches. Remember to overwrite `tents` with your update.
+```{r}
+tents ["height_in"] <- c (tents $height) / 2.54
+tents
+```
+
+12. How many tents cost more than $400?
+```{r}
+length (which((tents $price) > 400))
+```
+
+13. Subset the data frame so that it only contains tents that are valued $300 or less.  Assign the subsetted data frame the name `so_cheap_tents`.
+```{r}
+so_cheap_tents <-tents[(tents$price) <= 300, ] 
+so_cheap_tents
+```
+
+14. Of the tents that are more than $300, what percent are `big-agnes` tents?
+(tents$price > 300)
+```{r}
+length (which (tents [tents$price > 300, ] $ brand == "big-agnes")) / length (tents [tents$price >300, ] $brand)
+```
+
+15. Select the `bestuse` column of `tents` in four different ways: using `$`, `[[]]`, position number and `[]`, and variable name and `[]`. 
+```{r}
+tents$bestuse 
+tents [["bestuse"]]
+tents [,6]
+tents [, "bestuse"]
+```
+
+16. What is the name of the tend with the best height-to-weight ratio?
+```{r}
+tents [which.max ((tents$height)/ (tents$weight)), 1]
+```
+
+17. Run `table` with two arguments, `seasons` and `capacity` (this should be one table).  What did it do?
+```{r}
+table ((tents$seasons), (tents$capacity))
+```
+Table is to create tabulr results of categorical variables. 
+
+18. What type of tent (bestuse) is the most common? Your answer should return only the use and not the count.
+```{r}
+which.max (table ((tents$bestuse)))
+```
+
+19. Create a data frame called `kelty` with only data on kelty tents.  Do the same for `big-agnes`.  Then, combine the two data frames.
+```{r}
+kelty <- tents [(tents$brand) == "kelty", ]
+kelty
+big_agnes <- tents [(tents$brand) == "big-agnes", ]
+big_agnes
+total <- rbind (kelty, big_agnes)
+total
+```
+
+

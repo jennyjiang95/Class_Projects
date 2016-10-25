@@ -1,0 +1,155 @@
+---
+title: "Homework 4"
+author: Shangjun Jiang
+date: "Due: 11:59pm Tuesday, July 5, 2016"
+output: html_document
+---
+
+## Github
+Just a friendly reminder that your Github accounts should be up-to-date.  By the end of this assignment, you should have `hw1`-`hw4` folders filled along with `labs1`-`labs4` folders.  `labs4` will have `lab13` and `lab14` in it.
+
+## knitr
+As you try to reproduce this document, you may need to resize your graphs.  This is an art form that will require trial-and-error.  It's a pain to do in any document creation process.  [The R markdown chunk settings can be found at this link](http://yihui.name/knitr/options/).  The options go in the same place that you've been using `echo` and `eval`, and are separated by commas.
+
+## Allowed Packages:
+
+The following packages are allowed for this assignment:
+
+* readr
+* stringr
+* dplyr
+* tidyr
+* lubridate
+* ggplot2
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(lubridate)
+library(ggplot2)
+library(ggrepel)
+library(grid)
+library(gridExtra)
+
+```
+
+
+## The Data
+
+[The data come from a bike-renting program, CapitalShare, in Washington, DC](https://www.capitalbikeshare.com/data/stations/bikeStations.xml).  Cases span the last quarter of 2014.
+
+Two data files are available:
+
+* `dc_stations.csv` has the locations of bike rental stations
+    - `name` - name of the station
+    - `lat` - latitude of the station
+    - `long` - longitude of the station
+    - `nbBikes` - the number of bicycles currently docked at this station at time of data retrieval.  Irrelevant for this lab
+    - `nbEmptyDocks` - the number of empty docks at the time of data retrieval.  Irrelevant for this lab
+  
+* `2014q4_trips.csv` is a 653763 observation data set containing individual bike rental information.
+    - `duration` - length of the trip
+    - `sdate` - timestamp for start of the rental
+    - `sstation` - station of bike rental
+    - `edate` - timestamp for end of rental
+    - `estation` - station of bike return
+    - `bikeno` - unique bike ID
+    - `client` - registered clients have a subscription whereas casual users do not
+
+```{r}
+station <- read.csv("dc_stations.csv")
+str(station)
+trips <- read.csv("2014q4_trips.csv")
+str(trips)
+
+```
+
+## Time of Day (20 points)
+
+One might suspect that bike rentals are more popular at certain times of day than others.  Explore this idea by creating the graph below, titles and all.  The time of day refers to the timestamp of the start of the rental.  No special text size formatting was done, but if you decide to do so, no points will be awarded/lost.
+
+```{r,fig.width=9, fig.asp=.5}
+# <Your Code>
+
+st <-str_match(trips$sdate,"[0-9]{2}:[0-9]{2}:[0-9]{2}")
+st<- hms(st)
+trips <- mutate(trips, stduration= (hour(st) + minute(st)/60))
+
+#get weekday or weekend. 
+#trips <- mutate(trips, sdate = as.numeric(trips$sdate))
+trips <- mutate(trips, wd = (wday(trips$sdate)))
+trips <- mutate(trips, wd = ifelse (trips$wd>6 | trips$wd <2, "weekend", "weekday"))
+
+
+ggplot(trips,aes(x = stduration,y = ..density..))+
+  geom_density(aes(fill=client),alpha = 0.3, color = NA)+
+  facet_wrap(~wd)+
+  scale_x_continuous(limits = c(0, 24), breaks = seq(0, 24, by = 4))+
+  labs(title = "Temporal Trends in Bike Usage",
+       x = "Time of Day",
+       y = "Density")
+
+
+```
+
+Hints:
+
+1. You may want to convert the time to a numeric value ranging from 0-24.
+2. Alpha was set to 0.3.
+3. Setting color/fill to `NA` removes that aesthetic altogether.
+4. Use `scale_x_continuous` to modify the x-axis scale.
+
+## Distance (20 points)
+
+Bikeshare members may behave differently than casual renters.  Here we look at how their start and end stations differ in terms of crude distances.  Create the graph below, titles and all.  Distance is measured as the haversine between two stations (see note below).  Distances of more than 10km have been filtered out.
+
+```{r,fig.width=9, fig.asp=.5}
+# <Your code>
+
+#crossing
+cs <- crossing(station,station)
+#str(cs)
+cs$nbBikes<- NULL
+cs$nbEmptyDocks <- NULL
+cs$nbBikes<- NULL
+cs$nbEmptyDocks <- NULL
+length(cs$name)
+names(cs) <- c("sstation", "slat", "slong", "estation", "elat", "elong")
+iii<- inner_join(cs,trips)
+#str(iii)
+
+# create a sstation & estation
+
+# harvesine
+source("haversine.R")
+iii<- mutate(iii, distance= with(iii, haversine (slat,slong,elat,elong)))
+str(iii)
+
+ggplot(iii,aes(x = distance,y = ..density..))+
+  geom_density(aes(fill=client), alpha = 0.5, color = NA)+
+  facet_wrap(~wd)+
+  scale_x_continuous(limits = c(0.0, 10.0), breaks = seq(0.0, 10.0, by = 2.5))+
+  labs(title = "Distance Between Start and End Stations",
+       x = "Distance (km)",
+       y = "Density")
+
+
+
+```
+
+Hint:
+
+1. You'll need to create a data frame with `start` and `end` stations.  `crossing` from the `tidyr` package will calculate the Cartesian product between two sets (all possible pairings).
+
+2. You'll need the `haversine` function to estimate the distance between two lat/long coordinates.  You'll of course need to put it somewhere near the beginning of your knitr document.  Open up the file to see its documentation.
+
+3. The goal of the last two points was to create a "dictionary" of distances between all possible station pairs.  A suitable join will let you transfer the distance data to the trips data.
+
+4. Alpha was set to 0.5.
+
+## Interpretation (0 points)
+It's not the point of this class, but try to interpret the two graphs above.  What stories do they tell?
+It shows the distance makes a huge difference.
+

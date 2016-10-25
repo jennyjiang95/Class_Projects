@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Andrew Do" />
+
+
+<title>lesson29</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">lesson29</h1>
+<h4 class="author"><em>Andrew Do</em></h4>
+<h4 class="date"><em>August 1, 2016</em></h4>
+
+
+
+<div id="connecting-to-a-database" class="section level2">
+<h2>Connecting to a database</h2>
+<p>To connect to a SQL database, you’ll need to use the appropriate <code>src_*</code> function. This tells <code>R</code> where to look for data, but unlike our <code>read_*</code> functions, the data is not stored into memory.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="st">&quot;Chinook_Sqlite.sqlite&quot;</span>)</code></pre></div>
+<p>Once you’ve connected to a database, you can see what tables are available by calling on the connection:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook
+## src:  sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## tbls: Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine,
+##   MediaType, Playlist, PlaylistTrack, Track</code></pre></div>
+<p>To actually see a table, you use the <code>tbl</code> function. <code>tbl</code> is actually used in a second way, which we’ll talk about soon.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="st">&quot;Album&quot;</span>)
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    AlbumId                                 Title ArtistId
+##      &lt;int&gt;                                 &lt;chr&gt;    &lt;int&gt;
+## 1        1 For Those About To Rock We Salute You        1
+## 2        2                     Balls to the Wall        2
+## 3        3                     Restless and Wild        2
+## 4        4                     Let There Be Rock        1
+## 5        5                              Big Ones        3
+## 6        6                    Jagged Little Pill        4
+## 7        7                              Facelift        5
+## 8        8                        Warner 25 Anos        6
+## 9        9        Plays Metallica By Four Cellos        7
+## 10      10                            Audioslave        8
+## # ... with more rows</code></pre></div>
+</div>
+<div id="relational-databases" class="section level2">
+<h2>Relational databases</h2>
+<p>Up until this point, when we’ve been using the tidy data model in which we think of our observations as being single rows of our data frame with all variables of interest contained in this single flat table. While this certainly makes plotting and analyzing much easier, it’s not a very scalable model—a naive wrangling sequence can generate temporary tables that are too large for memory.</p>
+<p>Enter the relational database model where we store our data in multiple related tables. The <code>chinook</code> dataset we’ll be looking at today has the following <strong>schema</strong>, which is just a fancy word meaning “how the data is organized”.</p>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Chinook Data Schema" />
+<p class="caption">Chinook Data Schema</p>
+</div>
+<p>By far, the most successful and widespread language for data administration, storage, and manipulation is SQL, which stands for Structured Query Language. While there are many implementations of SQL, including MySQL, NoSQL, PostGreSQL, SQLite, etc., their basic functionalities are more or less the same with the main differences being availability of advanced functions. We will mainly focus on SQLite since it’s very quick to use with the <code>dplyr</code> package.</p>
+<p>Another thing to note is that SQL has three major components. It is a:</p>
+<ul>
+<li>Data Definition Language
+<ul>
+<li>Allows for creation and modification of relational schema</li>
+<li>Schema objects include relations, indexes, etc</li>
+</ul></li>
+<li>Data Manipulation Language
+<ul>
+<li>Insert, delete, update rows in tables</li>
+<li>Query data in tables</li>
+</ul></li>
+<li>Data Control Language
+<ul>
+<li>Concurrency control, transactions</li>
+<li>Administrative tasks, e.g. set up database servers, security permissions</li>
+</ul></li>
+</ul>
+<p>Our focus will be on a bullet subpoint: querying existing data in tables. Talking about all the nuances of databases can actually take an entire semester (take CS186 if you’re interested).</p>
+</div>
+<div id="conventions" class="section level2">
+<h2>Conventions</h2>
+<p>SQL functions are not case-sensitive, meaning <code>SELECT</code>, <code>Select</code>, and <code>select</code> perform the same task. <strong>Attributes</strong> (column names), however, are case-sensitive, so <code>TITLE</code>, <code>Title</code>, and <code>title</code> will refer to different things. The normal convention is to keep SQL functions in all caps.</p>
+</div>
+<div id="select-well-this-looks-oddly-familiar" class="section level2">
+<h2>SELECT (well this looks oddly familiar)</h2>
+<p>Let’s start with <code>SELECT</code> as your first function. The basic syntax is</p>
+<pre><code>SELECT column_list FROM table_list</code></pre>
+<p>For example, I’ll build our first query from the <code>Track</code> table:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_first_query &lt;-<span class="st"> </span><span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name,</span>
+<span class="st">    composer,</span>
+<span class="st">    unitprice</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">&quot;</span>)</code></pre></div>
+<p>And to execute:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(my_first_query)
+## Source:   query [?? x 4]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    trackid                                    name
+##      &lt;int&gt;                                   &lt;chr&gt;
+## 1        1 For Those About To Rock (We Salute You)
+## 2        2                       Balls to the Wall
+## 3        3                         Fast As a Shark
+## 4        4                       Restless and Wild
+## 5        5                    Princess of the Dawn
+## 6        6                   Put The Finger On You
+## 7        7                         Let's Get It Up
+## 8        8                        Inject The Venom
+## 9        9                              Snowballed
+## 10      10                              Evil Walks
+## # ... with more rows, and 2 more variables: composer &lt;chr&gt;,
+## #   unitprice &lt;dbl&gt;</code></pre></div>
+<p>A few of things to note:</p>
+<ul>
+<li>To construct a SQL call with <code>dplyr</code>, you need to provide the query as a string to the <code>sql</code> function.</li>
+<li>The whitespace isn’t necessary—I could have equivalently done</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sql</span>(<span class="st">&quot;SELECT trackid,name,composer,unitprice FROM Track&quot;</span>)</code></pre></div>
+<ul>
+<li>To run the query, I use the <code>tbl</code> function with the connection as my first argument and the query as my second.</li>
+</ul>
+<p>To select all the columns from a table, use the asterisk <code>*</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_second_query &lt;-<span class="st"> </span><span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT * FROM Track</span>
+<span class="st">&quot;</span>)
+chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(my_second_query)
+## Source:   query [?? x 9]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    TrackId                                    Name AlbumId MediaTypeId
+##      &lt;int&gt;                                   &lt;chr&gt;   &lt;int&gt;       &lt;int&gt;
+## 1        1 For Those About To Rock (We Salute You)       1           1
+## 2        2                       Balls to the Wall       2           2
+## 3        3                         Fast As a Shark       3           2
+## 4        4                       Restless and Wild       3           2
+## 5        5                    Princess of the Dawn       3           2
+## 6        6                   Put The Finger On You       1           1
+## 7        7                         Let's Get It Up       1           1
+## 8        8                        Inject The Venom       1           1
+## 9        9                              Snowballed       1           1
+## 10      10                              Evil Walks       1           1
+## # ... with more rows, and 5 more variables: GenreId &lt;int&gt;, Composer &lt;chr&gt;,
+## #   Milliseconds &lt;int&gt;, Bytes &lt;int&gt;, UnitPrice &lt;dbl&gt;</code></pre></div>
+<p>Notice that <code>dplyr</code> doesn’t actually load all of the data from the query. This is to save you from accidentally pulling in huge amounts of data and killing your memory. If you want more than the first 10 rows, you use the <code>collect</code> function and specify how many rows you want to see. To see the result of the entire query, specify <code>n = Inf</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(my_first_query) %&gt;%<span class="st"> </span><span class="kw">collect</span>(<span class="dt">n =</span> <span class="dv">5</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">TrackId</th>
+<th align="left">Name</th>
+<th align="left">Composer</th>
+<th align="right">UnitPrice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">For Those About To Rock (We Salute You)</td>
+<td align="left">Angus Young, Malcolm Young, Brian Johnson</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">Balls to the Wall</td>
+<td align="left">NA</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">Fast As a Shark</td>
+<td align="left">F. Baltes, S. Kaufman, U. Dirkscneider &amp; W. Hoffman</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">Restless and Wild</td>
+<td align="left">F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider &amp; W. Hoffman</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">Princess of the Dawn</td>
+<td align="left">Deaffy &amp; R.A. Smith-Diesel</td>
+<td align="right">0.99</td>
+</tr>
+</tbody>
+</table>
+<p>The printout looks similar, but notice that the object is now a <code>tibble</code> with a specific number of rows rather than a <code>query</code> with <code>??</code> rows.</p>
+</div>
+<div id="order-by" class="section level2">
+<h2>ORDER BY</h2>
+<p><code>ORDER BY</code> is pretty straightforward. It comes after the <code>FROM</code> clause, and you can specify ascending or descending with <code>ASC</code> and <code>DESC</code>. I’ll just provide some examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    milliseconds, </span>
+<span class="st">    albumid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    albumid ASC</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                                       name milliseconds albumid
+##                                      &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;
+## 1  For Those About To Rock (We Salute You)       343719       1
+## 2                    Put The Finger On You       205662       1
+## 3                          Let's Get It Up       233926       1
+## 4                         Inject The Venom       210834       1
+## 5                               Snowballed       203102       1
+## 6                               Evil Walks       263497       1
+## 7                                   C.O.D.       199836       1
+## 8                       Breaking The Rules       263288       1
+## 9                 Night Of The Long Knives       205688       1
+## 10                              Spellbound       270863       1
+## # ... with more rows</code></pre></div>
+<p>The <code>ASC</code> is actually unnecessary since it’s the default. You can also sort on multiple columns. This works the same way as <code>arrange</code> does in <code>dplyr</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    milliseconds, </span>
+<span class="st">    albumid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    albumid ASC,</span>
+<span class="st">    milliseconds DESC</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                                       name milliseconds albumid
+##                                      &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;
+## 1  For Those About To Rock (We Salute You)       343719       1
+## 2                               Spellbound       270863       1
+## 3                               Evil Walks       263497       1
+## 4                       Breaking The Rules       263288       1
+## 5                          Let's Get It Up       233926       1
+## 6                         Inject The Venom       210834       1
+## 7                 Night Of The Long Knives       205688       1
+## 8                    Put The Finger On You       205662       1
+## 9                               Snowballed       203102       1
+## 10                                  C.O.D.       199836       1
+## # ... with more rows</code></pre></div>
+<p>You can also specify the ordering by column position. The index refers to the position specified in the <code>SELECT</code> clause. Here 3 refers to <code>albumid</code> and 2 refers to <code>milliseconds</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    milliseconds, </span>
+<span class="st">    albumid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    3,2</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                                       name milliseconds albumid
+##                                      &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;
+## 1                                   C.O.D.       199836       1
+## 2                               Snowballed       203102       1
+## 3                    Put The Finger On You       205662       1
+## 4                 Night Of The Long Knives       205688       1
+## 5                         Inject The Venom       210834       1
+## 6                          Let's Get It Up       233926       1
+## 7                       Breaking The Rules       263288       1
+## 8                               Evil Walks       263497       1
+## 9                               Spellbound       270863       1
+## 10 For Those About To Rock (We Salute You)       343719       1
+## # ... with more rows</code></pre></div>
+</div>
+<div id="select-distinct-huh-more-similarities" class="section level2">
+<h2>SELECT DISTINCT (huh, more similarities)</h2>
+<p>You’ll often run into the case where selecting only a subset of the attributes leads to duplicates in your data</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    city</span>
+<span class="st">  FROM</span>
+<span class="st">    Customer</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    city</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 1]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##            city
+##           &lt;chr&gt;
+## 1     Amsterdam
+## 2     Bangalore
+## 3        Berlin
+## 4        Berlin
+## 5      Bordeaux
+## 6        Boston
+## 7     BrasÃ­lia
+## 8      Brussels
+## 9      Budapest
+## 10 Buenos Aires
+## # ... with more rows</code></pre></div>
+<p>Notice that Berlin appears twice. What if we want a list of distinct cities for our customers? In comes <code>SELECT DISTINCT</code>, which removes duplicate ROWS.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT DISTINCT</span>
+<span class="st">    city</span>
+<span class="st">  FROM</span>
+<span class="st">    Customer</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 1]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                     city
+##                    &lt;chr&gt;
+## 1  SÃ£o JosÃ© dos Campos
+## 2              Stuttgart
+## 3              MontrÃ©al
+## 4                   Oslo
+## 5                 Prague
+## 6                 Vienne
+## 7               Brussels
+## 8             Copenhagen
+## 9             SÃ£o Paulo
+## 10        Rio de Janeiro
+## # ... with more rows</code></pre></div>
+</div>
+<div id="where-aka-filter" class="section level2">
+<h2>WHERE (aka filter)</h2>
+<p><code>WHERE</code> fills in the role of <code>filter()</code> from <code>dplyr</code>. It has the following syntax:</p>
+<pre><code>SELECT 
+  column_list
+FROM
+  table
+WHERE
+  search_condition</code></pre>
+<div id="comparison-operators" class="section level3">
+<h3>Comparison Operators</h3>
+<p><code>WHERE</code> understands the following comparison operators</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Operator</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">=</td>
+<td align="left">Equal to</td>
+</tr>
+<tr class="even">
+<td align="left">&lt;&gt; or !=</td>
+<td align="left">Not equal to</td>
+</tr>
+<tr class="odd">
+<td align="left">&lt;</td>
+<td align="left">Less than</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;</td>
+<td align="left">Greater than</td>
+</tr>
+<tr class="odd">
+<td align="left">&lt;=</td>
+<td align="left">Less than or equal to</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;=</td>
+<td align="left">Greater than or equal to</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="logical-operators" class="section level3">
+<h3>Logical Operators</h3>
+<p>SQL does not have a dedicated logical data type, so logical values are represented by 1 and 0.</p>
+<p>SQLite understand the following logical operators</p>
+<table style="width:104%;">
+<colgroup>
+<col width="12%"></col>
+<col width="91%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Operator</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ALL</td>
+<td align="left">returns 1 if all expressions are 1.</td>
+</tr>
+<tr class="even">
+<td align="left">AND</td>
+<td align="left">returns 1 if both expressions are 1, and 0 if one of the expressions is 0.</td>
+</tr>
+<tr class="odd">
+<td align="left">ANY</td>
+<td align="left">returns 1 if any one of a set of comparisons is 1.</td>
+</tr>
+<tr class="even">
+<td align="left">BETWEEN</td>
+<td align="left">returns 1 if a value is within a range.</td>
+</tr>
+<tr class="odd">
+<td align="left">EXISTS</td>
+<td align="left">returns 1 if a subquery contains any rows.</td>
+</tr>
+<tr class="even">
+<td align="left">IN</td>
+<td align="left">returns 1 if a value is in a list of values.</td>
+</tr>
+<tr class="odd">
+<td align="left">LIKE</td>
+<td align="left">returns 1 if a value matches a pattern</td>
+</tr>
+<tr class="even">
+<td align="left">NOT</td>
+<td align="left">reverses the value of other operators such as NOT EXISTS, NOT IN, NOT BETWEEN, etc.</td>
+</tr>
+<tr class="odd">
+<td align="left">OR</td>
+<td align="left">returns true if either expression is 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="examples" class="section level3">
+<h3>Examples</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    milliseconds,</span>
+<span class="st">    bytes,</span>
+<span class="st">    albumid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    albumid = 1</span>
+<span class="st">&quot;</span>)) %&gt;%<span class="st"> </span><span class="kw">collect</span>(<span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="right">Milliseconds</th>
+<th align="right">Bytes</th>
+<th align="right">AlbumId</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">For Those About To Rock (We Salute You)</td>
+<td align="right">343719</td>
+<td align="right">11170334</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Put The Finger On You</td>
+<td align="right">205662</td>
+<td align="right">6713451</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Let’s Get It Up</td>
+<td align="right">233926</td>
+<td align="right">7636561</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Inject The Venom</td>
+<td align="right">210834</td>
+<td align="right">6852860</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Snowballed</td>
+<td align="right">203102</td>
+<td align="right">6599424</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Evil Walks</td>
+<td align="right">263497</td>
+<td align="right">8611245</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">C.O.D.</td>
+<td align="right">199836</td>
+<td align="right">6566314</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Breaking The Rules</td>
+<td align="right">263288</td>
+<td align="right">8596840</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Night Of The Long Knives</td>
+<td align="right">205688</td>
+<td align="right">6706347</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Spellbound</td>
+<td align="right">270863</td>
+<td align="right">8817038</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of a compound expression</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    milliseconds,</span>
+<span class="st">    bytes,</span>
+<span class="st">    albumid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    albumid = 1</span>
+<span class="st">    AND milliseconds &gt; 250000</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 4]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                                      name milliseconds    bytes albumid
+##                                     &lt;chr&gt;        &lt;int&gt;    &lt;int&gt;   &lt;int&gt;
+## 1 For Those About To Rock (We Salute You)       343719 11170334       1
+## 2                              Evil Walks       263497  8611245       1
+## 3                      Breaking The Rules       263288  8596840       1
+## 4                              Spellbound       270863  8817038       1</code></pre></div>
+<p><code>IN</code> functions like well… <code>%in%</code> from base <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    albumid,</span>
+<span class="st">    mediatypeid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    mediatypeid IN (2, 3)</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                     name albumid mediatypeid
+##                    &lt;chr&gt;   &lt;int&gt;       &lt;int&gt;
+## 1      Balls to the Wall       2           2
+## 2        Fast As a Shark       3           2
+## 3      Restless and Wild       3           2
+## 4   Princess of the Dawn       3           2
+## 5  Welcome to the Jungle      90           2
+## 6           It's So Easy      90           2
+## 7              Nightrain      90           2
+## 8          Out Ta Get Me      90           2
+## 9         Mr. Brownstone      90           2
+## 10         Paradise City      90           2
+## # ... with more rows</code></pre></div>
+<p>To negate a statement, use <code>NOT</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name,</span>
+<span class="st">    genreid</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    genreid NOT IN (1, 2, 3)</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    trackid                  name genreid
+##      &lt;int&gt;                 &lt;chr&gt;   &lt;int&gt;
+## 1       99    Your Time Has Come       4
+## 2      100          Out Of Exile       4
+## 3      101           Be Yourself       4
+## 4      102     Doesn't Remind Me       4
+## 5      103       Drown Me Slowly       4
+## 6      104         Heaven's Dead       4
+## 7      105              The Worm       4
+## 8      106         Man Or Animal       4
+## 9      107 Yesterday To Tomorrow       4
+## 10     108             Dandelion       4
+## # ... with more rows</code></pre></div>
+<p><code>LIKE</code> allows you to perform an inexact search. The <code>%</code> acts like <code>.*</code> in regular expressions. It is NOT case-sensitive. Say for example, you want to find all <code>composer</code> with <code>Smith</code> in their name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    name,</span>
+<span class="st">    albumid,</span>
+<span class="st">    composer</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    composer LIKE '%Smith%'</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    albumid</span>
+<span class="st">&quot;</span>)) %&gt;%<span class="st"> </span><span class="kw">collect</span>(<span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="right">AlbumId</th>
+<th align="left">Composer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Restless and Wild</td>
+<td align="right">3</td>
+<td align="left">F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider &amp; W. Hoffman</td>
+</tr>
+<tr class="even">
+<td align="left">Princess of the Dawn</td>
+<td align="right">3</td>
+<td align="left">Deaffy &amp; R.A. Smith-Diesel</td>
+</tr>
+<tr class="odd">
+<td align="left">Killing Floor</td>
+<td align="right">19</td>
+<td align="left">Adrian Smith</td>
+</tr>
+<tr class="even">
+<td align="left">Machine Men</td>
+<td align="right">19</td>
+<td align="left">Adrian Smith</td>
+</tr>
+<tr class="odd">
+<td align="left">2 Minutes To Midnight</td>
+<td align="right">95</td>
+<td align="left">Adrian Smith/Bruce Dickinson</td>
+</tr>
+<tr class="even">
+<td align="left">Can I Play With Madness</td>
+<td align="right">96</td>
+<td align="left">Adrian Smith/Bruce Dickinson/Steve Harris</td>
+</tr>
+<tr class="odd">
+<td align="left">The Evil That Men Do</td>
+<td align="right">96</td>
+<td align="left">Adrian Smith/Bruce Dickinson/Steve Harris</td>
+</tr>
+<tr class="even">
+<td align="left">The Wicker Man</td>
+<td align="right">97</td>
+<td align="left">Adrian Smith/Bruce Dickinson/Steve Harris</td>
+</tr>
+<tr class="odd">
+<td align="left">The Fallen Angel</td>
+<td align="right">97</td>
+<td align="left">Adrian Smith/Steve Harris</td>
+</tr>
+<tr class="even">
+<td align="left">Wildest Dreams</td>
+<td align="right">98</td>
+<td align="left">Adrian Smith/Steve Harris</td>
+</tr>
+</tbody>
+</table>
+<p><code>_</code> functions like <code>.</code> in regular expressions. The following would be like searching for <code>&quot;.*Br.wn.*&quot;</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    name LIKE '%Br_wn%'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##   trackid                 name
+##     &lt;int&gt;                &lt;chr&gt;
+## 1    1053 Bad, Bad Leroy Brown
+## 2    1150       Mr. Brownstone</code></pre></div>
+</div>
+</div>
+<div id="glob" class="section level2">
+<h2>GLOB</h2>
+<p><code>GLOB</code> functions like <code>LIKE</code> except that it is case-sensitive and allows for character sets with <code>[]</code> like with regular expressions. It also uses <code>?</code> instead of <code>_</code> to represent “any one character” (I have no idea why this is the case)</p>
+<p>Match any instance of <code>name</code> that starts with <code>'Man'</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    name GLOB 'Man*'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    trackid                    name
+##      &lt;int&gt;                   &lt;chr&gt;
+## 1       52          Man In The Box
+## 2      106           Man Or Animal
+## 3      257              Manguetown
+## 4      358 Man With The Woman Head
+## 5      562               Mangueira
+## 6      584                  Manuel
+## 7     1397         Man On The Edge
+## 8     1459        Manifest Destiny
+## 9     1480        Manic Depression
+## 10    2046              Manguetown
+## # ... with more rows</code></pre></div>
+<p>Match any instance of <code>name</code> that starts with any single character followed by <code>'ere'</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    name GLOB '?ere*'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##   trackid                         name
+##     &lt;int&gt;                        &lt;chr&gt;
+## 1     324                      PererÃª
+## 2    1132                     Serenity
+## 3    1452      Were Do We Go From Here
+## 4    1740                       Sereia
+## 5    2198                       Jeremy
+## 6    2479      Here's To The Atom Bomb
+## 7    2791                 HereditÃ¡rio
+## 8    3042 Here I Am (Come And Take Me)
+## 9    3133              Here I Go Again</code></pre></div>
+<p>Match any instance of <code>name</code> with a number in 1-9</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    name GLOB '*[1-9]*'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    trackid                       name
+##      &lt;int&gt;                      &lt;chr&gt;
+## 1      109                    #1 Zero
+## 2      122             20 Flight Rock
+## 3      132          13 Years Of Grief
+## 4      343 Communication Breakdown(2)
+## 5      347 Communication Breakdown(3)
+## 6      348   I Can't Quit You Baby(2)
+## 7      349            You Shook Me(2)
+## 8      355              200 Years Old
+## 9      360               Vai-Vai 2001
+## 10     361                   X-9 2001
+## # ... with more rows</code></pre></div>
+<p>Match any instance of <code>name</code> without a number in 1-9</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    trackid,</span>
+<span class="st">    name</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  WHERE</span>
+<span class="st">    name GLOB '*[^1-9]*'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    trackid                                    name
+##      &lt;int&gt;                                   &lt;chr&gt;
+## 1        1 For Those About To Rock (We Salute You)
+## 2        2                       Balls to the Wall
+## 3        3                         Fast As a Shark
+## 4        4                       Restless and Wild
+## 5        5                    Princess of the Dawn
+## 6        6                   Put The Finger On You
+## 7        7                         Let's Get It Up
+## 8        8                        Inject The Venom
+## 9        9                              Snowballed
+## 10      10                              Evil Walks
+## # ... with more rows</code></pre></div>
+</div>
+<div id="joins" class="section level2">
+<h2>JOINS</h2>
+<p><code>LEFT JOIN</code> in SQL works the same was as <code>left_join()</code> in <code>dplyr</code>. The basic syntax is:</p>
+<pre><code>SELECT
+  TableA.column_of_A
+  TableB.column_of_B
+FROM
+  TableA LEFT JOIN TableB
+  ON TableA.column_from_A = TableB.column_from_B
+WHERE 
+  search_condition</code></pre>
+<p>Notice that you have to specify where the columns are coming from by prefixing with the table names. For example</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    Artist.ArtistId,</span>
+<span class="st">    albumId</span>
+<span class="st">  FROM</span>
+<span class="st">    Artist LEFT JOIN Album </span>
+<span class="st">    ON Artist.artistid = Album.artistid</span>
+<span class="st">  ORDER BY</span>
+<span class="st">    albumid</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    ArtistId albumId
+##       &lt;int&gt;   &lt;int&gt;
+## 1        25      NA
+## 2        26      NA
+## 3        28      NA
+## 4        29      NA
+## 5        30      NA
+## 6        31      NA
+## 7        32      NA
+## 8        33      NA
+## 9        34      NA
+## 10       35      NA
+## # ... with more rows</code></pre></div>
+<p>It looks like some of the artists don’t actually have albums. We can grab those by looking for <code>NULL</code> values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    Artist.ArtistId,</span>
+<span class="st">    albumId</span>
+<span class="st">  FROM</span>
+<span class="st">    Artist LEFT JOIN Album </span>
+<span class="st">    ON Artist.artistid = Album.artistid</span>
+<span class="st">  WHERE</span>
+<span class="st">    albumid IS NULL</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    ArtistId albumId
+##       &lt;int&gt;   &lt;int&gt;
+## 1        25      NA
+## 2        26      NA
+## 3        28      NA
+## 4        29      NA
+## 5        30      NA
+## 6        31      NA
+## 7        32      NA
+## 8        33      NA
+## 9        34      NA
+## 10       35      NA
+## # ... with more rows</code></pre></div>
+<p>SQLite supports <code>INNER_JOIN</code>, which acts like <code>inner_join()</code> and <code>CROSS_JOIN</code>, which acts like <code>crossing()</code>. It does not have specific functions that act like <code>full_join()</code>, <code>semi_join()</code>, <code>right_join()</code>, or <code>anti_join()</code>. ## Aliases</p>
+<p>It may be a little troublesome to have to type out the full name of the table each time we want to specify a column in a specific table. To make life a little easier, we can use aliases. Consider the example below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    a.ArtistId,</span>
+<span class="st">    albumId</span>
+<span class="st">  FROM</span>
+<span class="st">    Artist a LEFT JOIN Album b </span>
+<span class="st">    ON a.artistid = b.artistid</span>
+<span class="st">  WHERE</span>
+<span class="st">    albumid IS NOT NULL</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    ArtistId albumId
+##       &lt;int&gt;   &lt;int&gt;
+## 1         1       1
+## 2         1       4
+## 3         2       2
+## 4         2       3
+## 5         3       5
+## 6         4       6
+## 7         5       7
+## 8         6       8
+## 9         6      34
+## 10        7       9
+## # ... with more rows</code></pre></div>
+<p>Here <code>a</code> is an <strong>alias</strong> for <code>Artist</code> and <code>b</code> is an <strong>alias</strong> for <code>Album</code>. I can use an attribute name and its alias interchangeably. You give a table an alias by declaring it after a table name.</p>
+</div>
+<div id="group-by-like-group_by" class="section level2">
+<h2>GROUP BY (like group_by())</h2>
+<p>The aggregation functions <code>AVG</code>, <code>COUNT</code>, <code>MAX</code>, <code>MIN</code>, and <code>SUM</code> work in conjunction with <code>GROUP BY</code>, which always returns one row per group (it might produce undesired effects if you don’t provide an aggregation function!)</p>
+<p>Here we count how many tracks are in each album:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    albumid,</span>
+<span class="st">    COUNT(trackid)</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  GROUP BY</span>
+<span class="st">    albumid</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    albumid COUNT(trackid)
+##      &lt;int&gt;          &lt;int&gt;
+## 1        1             10
+## 2        2              1
+## 3        3              3
+## 4        4              8
+## 5        5             15
+## 6        6             13
+## 7        7             12
+## 8        8             14
+## 9        9              8
+## 10      10             14
+## # ... with more rows</code></pre></div>
+<p>To name the new column, we use an <code>AS</code> clause</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    albumid,</span>
+<span class="st">    COUNT(trackid) AS NumberOfTracks</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  GROUP BY</span>
+<span class="st">    albumid</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    albumid NumberOfTracks
+##      &lt;int&gt;          &lt;int&gt;
+## 1        1             10
+## 2        2              1
+## 3        3              3
+## 4        4              8
+## 5        5             15
+## 6        6             13
+## 7        7             12
+## 8        8             14
+## 9        9              8
+## 10      10             14
+## # ... with more rows</code></pre></div>
+<p>Here we use <code>SUM</code> to find the playtime and size of each album:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">SELECT</span>
+<span class="st">  albumid,</span>
+<span class="st">  SUM(milliseconds) AS length,</span>
+<span class="st">  SUM(bytes) AS size</span>
+<span class="st">FROM</span>
+<span class="st">  Track</span>
+<span class="st">GROUP BY</span>
+<span class="st">  albumid</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    albumid  length      size
+##      &lt;int&gt;   &lt;int&gt;     &lt;int&gt;
+## 1        1 2400415  78270414
+## 2        2  342562   5510424
+## 3        3  858088  14613294
+## 4        4 2453259  80239024
+## 5        5 4411709 144277453
+## 6        6 3450925 113150359
+## 7        7 3249365 105527170
+## 8        8 2906926  94682869
+## 9        9 2671407  87412645
+## 10      10 3927713  94304482
+## # ... with more rows</code></pre></div>
+<p>We take full advantage of the relational database when we can relate multiple tables. Here we get information on the actual title of the albums.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">SELECT</span>
+<span class="st">  title AS AlbumTitle,</span>
+<span class="st">  COUNT(trackid) AS NumberOfSongs</span>
+<span class="st">FROM</span>
+<span class="st">  Track a INNER JOIN Album b </span>
+<span class="st">  ON a.albumid = b.albumid</span>
+<span class="st">GROUP BY</span>
+<span class="st">  a.albumid</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##                               AlbumTitle NumberOfSongs
+##                                    &lt;chr&gt;         &lt;int&gt;
+## 1  For Those About To Rock We Salute You            10
+## 2                      Balls to the Wall             1
+## 3                      Restless and Wild             3
+## 4                      Let There Be Rock             8
+## 5                               Big Ones            15
+## 6                     Jagged Little Pill            13
+## 7                               Facelift            12
+## 8                         Warner 25 Anos            14
+## 9         Plays Metallica By Four Cellos             8
+## 10                            Audioslave            14
+## # ... with more rows</code></pre></div>
+</div>
+<div id="having" class="section level2">
+<h2>HAVING</h2>
+<p><code>HAVING</code> allows you to provide a search condition for a GROUP. It functions very similarly to <code>WHERE</code>, but whereas <code>WHERE</code> applies a search condition on individual rows, <code>HAVING</code> filters grouped data. A fairly good rule of thumb is <code>WHERE</code> before <code>GROUP BY</code> and <code>HAVING</code> after.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    albumid,</span>
+<span class="st">    COUNT(trackid)</span>
+<span class="st">  FROM</span>
+<span class="st">    Track</span>
+<span class="st">  GROUP BY</span>
+<span class="st">    albumid</span>
+<span class="st">  HAVING albumid = 1</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##   albumid COUNT(trackid)
+##     &lt;int&gt;          &lt;int&gt;
+## 1       1             10</code></pre></div>
+<p>In the example above, you could have filtered with a <code>WHERE</code> clause as well. Here’s an example where only <code>HAVING</code> would work:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT</span>
+<span class="st">    a.albumid,</span>
+<span class="st">    title,</span>
+<span class="st">    SUM(Milliseconds) AS length</span>
+<span class="st">  FROM</span>
+<span class="st">    Track a INNER JOIN Album b ON a.AlbumId = b.AlbumId</span>
+<span class="st">  GROUP BY</span>
+<span class="st">    a.albumid</span>
+<span class="st">  HAVING</span>
+<span class="st">    length &gt; 60000000</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 3]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##   albumid                                    title   length
+##     &lt;int&gt;                                    &lt;chr&gt;    &lt;int&gt;
+## 1     229                           Lost, Season 3 70665582
+## 2     230                           Lost, Season 1 64854936
+## 3     231                           Lost, Season 2 63289631
+## 4     253 Battlestar Galactica (Classic), Season 1 70213784</code></pre></div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
