@@ -17,4 +17,9 @@ Interested in languages, I used the dataset from [a Dialect Survey conducted by 
 
 ### 4. Bay Area Public Bike Usage v. The Weather
 The purpose of this project is to conduct an open preliminary review and analysis of accumulated data sourced directly from a local bicycle rental service called Bay Area Bike Share and find correlations between bike share activity and weather conditions using the data.
-###### Language: Python (numpy, panda, ggplot2
+###### Language: Python (numpy, panda, ggplot2)
+
+### 5. Bank Account (Python: Objective-Oriented Language)
+This is a class project to show my understanding of python as an objective-oriented language. This Bank Account program is to allow user to manage their account in the bank. 
+###### Language: Python 
+
